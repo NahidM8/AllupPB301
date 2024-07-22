@@ -20,7 +20,10 @@ namespace AllupPB301.Controllers
         {
             HomeVM HomeVM = new();
             HomeVM.Sliders = await _context.Sliders.Where(s=>!s.IsDeleted).ToListAsync();
-            HomeVM.Categories = await _context.Categories.Where(s => !s.IsDeleted).ToListAsync();
+            HomeVM.Categories = await _context.Categories.Where(s => !s.IsDeleted && s.IsMain).ToListAsync();
+            HomeVM.BestSellerProducts = await _context.Products.Where(p => !p.IsDeleted && p.isBestSeller).ToListAsync();
+            HomeVM.NewProducts = await _context.Products.Where(p => !p.IsDeleted && p.isNewArrival).ToListAsync();
+            HomeVM.FeaturedProducts = await _context.Products.Where(p => !p.IsDeleted && p.isFeatured).ToListAsync();
 
             return View(HomeVM);
         }
